@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Monthsary, My lablab ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Great+Vibes&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --blush: #f2c4ce;
+  --rose: #d4758a;
+  --deep-rose: #9b3a54;
+  --cream: #fdf6f0;
+  --petal: #fce8ef;
+  --gold: #c9a96e;
+  --sage: #7a9e7e;
+  --sage-light: #a8c5a0;
+  --sage-pale: #d8ead4;
+  --moss: #4a7a50;
+  --leaf: #6aaa6e;
+  --fern: #b5c98a;
+  --script: 'Great Vibes', cursive;
+  --serif: 'Cormorant Garamond', serif;
+  --sans: 'Lato', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  font-family: var(--serif);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ── FLOATING CANVAS ── */
+#hearts-canvas {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none; z-index: 0;
+}
+
+/* ── BOTANICAL CORNERS (fixed decoration) ── */
+.botanical-corner {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.55;
+}
+.bc-tl { top: 0; left: 0; transform: rotate(0deg); }
+.bc-tr { top: 0; right: 0; transform: rotate(90deg); }
+.bc-bl { bottom: 0; left: 0; transform: rotate(270deg); }
+.bc-br { bottom: 0; right: 0; transform: rotate(180deg); }
+
+/* ── LANDING ── */
+#landing {
+  position: relative; z-index: 2;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 28px;
+  background: radial-gradient(ellipse at 50% 55%, #fce8ef 0%, #f5f0e8 40%, #edf4eb 100%);
+  padding: 40px 20px;
+}
+
+.landing-tagline {
+  font-family: var(--script);
+  font-size: clamp(20px, 4.5vw, 30px);
+  color: var(--rose);
+  letter-spacing: 1px;
+  opacity: 0;
+  animation: softFadeUp 1.4s ease 0.3s forwards;
+}
+
+/* ── ENVELOPE ── */
+.envelope-wrap {
+  position: relative;
+  width: min(340px, 86vw);
+  opacity: 0;
+  animation: softFadeUp 1.4s ease 0.8s forwards;
+}
+
+.env-body {
+  position: relative;
+  width: 100%;
+  padding-top: 65%;
+  background: #fce8ef;
+  border-radius: 4px 4px 8px 8px;
+  box-shadow: 0 12px 40px rgba(180,80,100,0.15), 0 2px 8px rgba(180,80,100,0.08);
+  overflow: visible;
+}
+
+.env-back-flap {
+  position: absolute;
+  bottom: 100%; left: 0; right: 0;
+  height: 55%;
+  background: linear-gradient(135deg, #f5d5df 0%, #d4edcc 100%);
+  clip-path: polygon(0 100%, 50% 0%, 100% 100%);
+  border-radius: 2px 2px 0 0;
+  transform-origin: bottom center;
+  transition: transform 1.2s cubic-bezier(0.4,0,0.2,1);
+  z-index: 5;
+}
+.env-body.opening .env-back-flap { transform: rotateX(-180deg); }
+
+.env-left-flap, .env-right-flap {
+  position: absolute; top: 0; bottom: 0; width: 50%;
+  background: linear-gradient(135deg, #f0dcdc, #ddeedd);
+}
+.env-left-flap  { left: 0;  clip-path: polygon(0 0, 100% 50%, 0 100%); }
+.env-right-flap { right: 0; clip-path: polygon(0 50%, 100% 0, 100% 100%); }
+
+.env-bottom-flap {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 55%;
+  background: #fce8ef;
+  clip-path: polygon(0 100%, 50% 0%, 100% 100%);
+  z-index: 2;
+}
+
+.env-text {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  z-index: 3; gap: 8px; pointer-events: none;
+}
+.env-to {
+  font-family: var(--script);
+  font-size: clamp(22px, 6vw, 32px);
+  color: var(--deep-rose); text-align: center; line-height: 1.3;
+}
+.env-sub {
+  font-family: var(--serif); font-size: 11px;
+  letter-spacing: 3px; color: var(--rose); text-transform: uppercase;
+}
+
+/* wax seal */
+.wax-seal {
+  position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%);
+  width: 52px; height: 52px;
+  background: radial-gradient(circle at 40% 35%, #c9505a, #8b2035);
+  border-radius: 50%; z-index: 10; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 16px rgba(139,32,53,0.4), inset 0 1px 3px rgba(255,255,255,0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.wax-seal:hover {
+  transform: translateX(-50%) scale(1.1);
+  box-shadow: 0 6px 24px rgba(139,32,53,0.5), inset 0 1px 3px rgba(255,255,255,0.2);
+}
+
+.letter-peek {
+  position: absolute; bottom: 100%; left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  width: 82%; background: #fffaf7;
+  border: 1px solid #f0d8de; padding: 18px 20px;
+  border-radius: 2px; z-index: 4; opacity: 0; pointer-events: none;
+  transition: opacity 0.6s, transform 0.8s cubic-bezier(0.2,0.8,0.3,1);
+  box-shadow: 0 -4px 20px rgba(180,80,100,0.12);
+}
+.letter-peek.show { opacity: 1; transform: translateX(-50%) translateY(-16px); }
+.letter-peek-text {
+  font-family: var(--script); font-size: 14px;
+  color: var(--deep-rose); text-align: center;
+}
+
+.seal-hint {
+  margin-top: 36px; font-family: var(--serif);
+  font-size: 12px; letter-spacing: 3px; color: var(--rose);
+  text-transform: uppercase; text-align: center;
+  animation: breathe 2.4s ease-in-out infinite;
+}
+
+/* ── TRANSITION OVERLAY ── */
+#transition-overlay {
+  position: fixed; inset: 0;
+  background: var(--petal); z-index: 100;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+#transition-overlay.active { opacity: 1; pointer-events: all; }
+
+/* ── COLLAGE TRANSITION OVERLAY ── */
+#collage-overlay {
+  position: fixed; inset: 0;
+  background: linear-gradient(135deg, #fce8ef 0%, #d8ead4 100%);
+  z-index: 100; opacity: 0; pointer-events: none;
+  transition: opacity 0.7s ease;
+  display: flex; align-items: center; justify-content: center;
+}
+#collage-overlay.active { opacity: 1; pointer-events: all; }
+.overlay-msg {
+  font-family: var(--script); font-size: clamp(28px, 6vw, 44px);
+  color: var(--deep-rose); text-align: center;
+  opacity: 0; transform: scale(0.8);
+  transition: opacity 0.5s 0.3s, transform 0.5s 0.3s;
+}
+#collage-overlay.active .overlay-msg { opacity: 1; transform: scale(1); }
+
+/* ── MAIN CONTENT ── */
+#main-content {
+  display: none; position: relative; z-index: 2;
+  min-height: 100vh; flex-direction: column; align-items: center;
+}
+#main-content.visible { display: flex; }
+
+/* ── GALLERY SECTION ── */
+#gallery {
+  width: 100%; display: flex; flex-direction: column;
+  align-items: center; padding: 70px 20px 60px;
+  background: linear-gradient(180deg, #f0f6ee 0%, #fdf6f0 60%, #fce8ef 100%);
+  position: relative;
+}
+
+/* Botanical side decorations in gallery */
+.gallery-botanical-left, .gallery-botanical-right {
+  position: absolute; top: 50%; pointer-events: none; opacity: 0.3;
+}
+.gallery-botanical-left { left: 10px; transform: translateY(-50%) rotate(-15deg); }
+.gallery-botanical-right { right: 10px; transform: translateY(-50%) rotate(15deg) scaleX(-1); }
+
+.gallery-header {
+  font-family: var(--script); font-size: clamp(36px, 8vw, 56px);
+  color: var(--deep-rose); text-align: center; margin-bottom: 8px;
+  opacity: 0; animation: softFadeUp 1s ease 0.2s forwards;
+}
+.gallery-sub {
+  font-family: var(--serif); font-style: italic;
+  font-size: 14px; color: var(--sage); letter-spacing: 2px;
+  text-align: center; margin-bottom: 40px;
+  opacity: 0; animation: softFadeUp 1s ease 0.5s forwards;
+}
+
+/* ── PAGE INDICATOR ── */
+.page-indicator {
+  display: flex; gap: 10px; margin-bottom: 24px;
+}
+.page-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--blush); transition: background 0.4s, transform 0.3s;
+}
+.page-dot.active { background: var(--deep-rose); transform: scale(1.3); }
+
+/* ── COLLAGE WRAPPER ── */
+.collage-wrapper {
+  position: relative;
+  width: min(600px, 94vw);
+  overflow: hidden;
+}
+
+/* ── COLLAGE PAGES ── */
+.collage-pages {
+  display: flex;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 200%; /* 2 pages */
+}
+
+.collage-page {
+  width: 50%;
+  flex-shrink: 0;
+}
+
+/* ── COLLAGE GRID ── */
+.collage {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.collage-tile {
+  position: relative; border-radius: 10px; overflow: hidden;
+  cursor: pointer; background: #fce8ef;
+  box-shadow: 0 4px 18px rgba(122,158,126,0.15), 0 2px 6px rgba(180,80,100,0.10);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+.collage-tile:hover {
+  transform: scale(1.03) translateY(-2px);
+  box-shadow: 0 10px 32px rgba(180,80,100,0.22); z-index: 2;
+}
+
+/* page 1 grid positions */
+.tile-1 { grid-column: 1 / 3; grid-row: 1; aspect-ratio: 16/10; }
+.tile-2 { grid-column: 3 / 4; grid-row: 1; aspect-ratio: 3/4; }
+.tile-3 { grid-column: 1 / 2; grid-row: 2; aspect-ratio: 3/4; }
+.tile-4 { grid-column: 2 / 4; grid-row: 2; aspect-ratio: 16/10; }
+.tile-5 { grid-column: 1 / 4; grid-row: 3; aspect-ratio: 21/9; }
+
+
+/* page 2 grid positions */
+.tile-6 { grid-column: 1 / 3; grid-row: 1; aspect-ratio: 16/10; }
+.tile-7 { grid-column: 3 / 4; grid-row: 1; aspect-ratio: 3/4; }
+.tile-8 { grid-column: 1 / 2; grid-row: 2; aspect-ratio: 3/4; }
+.tile-9 { grid-column: 2 / 4; grid-row: 2; aspect-ratio: 16/10; }
+.tile-10 { grid-column: 1 / 4; grid-row: 3; aspect-ratio: 21/9; }
+
+.tile-inner {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.tile-placeholder {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 10px;
+  background: linear-gradient(135deg, #e8f0e4 0%, #fce8ef 60%, #d8ead4 100%);
+  transition: opacity 0.5s ease;
+}
+.tile-placeholder svg { opacity: 0.35; }
+.tile-placeholder span {
+  font-family: var(--serif); font-style: italic;
+  font-size: 11px; letter-spacing: 1.5px; color: var(--sage);
+  text-align: center; padding: 0 12px;
+}
+
+.tile-photo {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  opacity: 0; transition: opacity 0.55s ease;
+}
+
+.tile-caption {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(60,100,60,0.5));
+  padding: 28px 12px 12px;
+  font-family: var(--script); font-size: 16px; color: #fff;
+  text-align: center; text-shadow: 0 1px 4px rgba(0,0,0,0.25);
+  opacity: 0; transition: opacity 0.4s ease;
+}
+
+.tile-hint {
+  position: absolute; top: 8px; right: 8px;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: rgba(255,255,255,0.75);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: var(--deep-rose);
+  animation: breathe 2s ease-in-out infinite;
+  transition: opacity 0.4s;
+}
+
+.collage-tile.revealed .tile-placeholder { opacity: 0; pointer-events: none; }
+.collage-tile.revealed .tile-photo { opacity: 1; }
+.collage-tile.revealed .tile-caption { opacity: 1; }
+.collage-tile.revealed .tile-hint { opacity: 0; }
+
+.tile-burst { position: absolute; inset: 0; pointer-events: none; overflow: hidden; border-radius: 10px; }
+.tile-spark {
+  position: absolute; font-size: 16px;
+  animation: sparkFloat 0.9s ease forwards; pointer-events: none;
+}
+@keyframes sparkFloat {
+  0%   { opacity: 1; transform: translate(0,0) scale(0.5); }
+  100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(1.2); }
+}
+
+/* ── NEXT PAGE BUTTON ── */
+.next-page-btn {
+  margin-top: 28px; padding: 14px 40px;
+  background: linear-gradient(135deg, var(--sage), var(--moss));
+  color: #fff; border: none; border-radius: 50px;
+  font-family: var(--script); font-size: 26px; cursor: pointer;
+  letter-spacing: 1px;
+  box-shadow: 0 8px 28px rgba(74,122,80,0.35);
+  transition: transform 0.2s, box-shadow 0.2s, opacity 0.5s;
+  opacity: 0; pointer-events: none;
+  display: flex; align-items: center; gap: 12px;
+}
+.next-page-btn.visible { opacity: 1; pointer-events: all; }
+.next-page-btn:hover { transform: scale(1.06); box-shadow: 0 12px 36px rgba(74,122,80,0.45); }
+.next-page-btn:active { transform: scale(0.97); }
+
+.back-btn {
+  margin-top: 16px; padding: 10px 28px;
+  background: transparent; color: var(--sage);
+  border: 1.5px solid var(--sage-light); border-radius: 50px;
+  font-family: var(--serif); font-style: italic; font-size: 14px;
+  letter-spacing: 2px; cursor: pointer;
+  transition: all 0.2s;
+  opacity: 0; pointer-events: none;
+}
+.back-btn.visible { opacity: 1; pointer-events: all; }
+.back-btn:hover { background: var(--sage-pale); }
+
+.gallery-hint {
+  margin-top: 22px; font-family: var(--serif); font-style: italic;
+  font-size: 12px; letter-spacing: 2px; color: var(--sage);
+  opacity: 0.8; text-align: center;
+  animation: breathe 2.5s ease-in-out infinite;
+}
+
+/* ── LETTER SECTION ── */
+#letter-section {
+  width: 100%; padding: 80px 20px 60px;
+  display: flex; flex-direction: column; align-items: center;
+  background: #fffaf7; position: relative;
+  border-top: 1px solid var(--sage-pale);
+}
+
+/* Botanical vine strip */
+.vine-strip {
+  width: 100%; height: 40px; position: absolute;
+  top: -1px; left: 0; overflow: hidden;
+}
+
+.letter-divider {
+  display: flex; align-items: center; gap: 18px;
+  margin-bottom: 56px; width: min(560px, 92vw);
+}
+.divider-line { flex: 1; height: 1px; background: var(--sage-pale); }
+.divider-icon { font-family: var(--script); font-size: 28px; color: var(--sage); }
+
+.letter-paper {
+  width: min(560px, 92vw); background: #fffdf9;
+  border: 1px solid #e8dce4; border-radius: 4px;
+  padding: clamp(36px, 8vw, 64px) clamp(28px, 8vw, 56px);
+  position: relative;
+  box-shadow: 0 8px 40px rgba(122,158,126,0.1), 0 2px 8px rgba(180,80,100,0.06);
+}
+
+.letter-paper::before {
+  content: ''; position: absolute; top: 0; left: 28px; bottom: 0;
+  width: 1px; background: rgba(122,158,126,0.2);
+}
+
+/* Small botanical watermark on letter */
+.letter-botanical {
+  position: absolute; bottom: 20px; right: 20px;
+  opacity: 0.07; pointer-events: none;
+}
+
+.letter-date {
+  font-family: var(--serif); font-size: 13px; font-style: italic;
+  color: var(--sage); letter-spacing: 1px; margin-bottom: 28px; text-align: right;
+}
+.letter-salutation {
+  font-family: var(--script); font-size: clamp(30px, 6vw, 42px);
+  color: var(--deep-rose); margin-bottom: 24px; line-height: 1.1;
+}
+.letter-body {
+  font-family: var(--serif); font-size: clamp(15px, 2.2vw, 17px);
+  line-height: 2; color: #5a3545; font-weight: 300;
+}
+.letter-body p { margin-bottom: 20px; }
+.letter-body p:last-child { margin-bottom: 0; }
+.letter-closing {
+  margin-top: 36px; font-family: var(--script);
+  font-size: clamp(26px, 5vw, 36px); color: var(--deep-rose); text-align: right;
+}
+
+/* ── FINAL SECTION ── */
+#final-section {
+  width: 100%; padding: 80px 20px 100px;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 28px;
+  background: linear-gradient(180deg, #fdf6f0 0%, #eef5ec 50%, #fce8ef 100%);
+  position: relative;
+}
+
+.final-flowers {
+  display: flex; align-items: flex-end; gap: 10px;
+  flex-wrap: wrap; justify-content: center;
+}
+
+.final-msg {
+  font-family: var(--script); font-size: clamp(22px, 5vw, 32px);
+  color: var(--deep-rose); letter-spacing: 1px; text-align: center;
+}
+
+.love-btn {
+  position: relative; padding: 18px 52px;
+  background: linear-gradient(135deg, #d4758a, #9b3a54);
+  color: #fff; border: none; border-radius: 50px;
+  font-family: var(--script); font-size: 28px; cursor: pointer;
+  letter-spacing: 1px; box-shadow: 0 8px 32px rgba(155,58,84,0.35);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.love-btn:hover { transform: scale(1.06); box-shadow: 0 12px 40px rgba(155,58,84,0.45); }
+.love-btn:active { transform: scale(0.97); }
+
+/* ── BURST OVERLAY ── */
+#burst-layer { position: fixed; inset: 0; pointer-events: none; z-index: 200; overflow: hidden; }
+.burst-item {
+  position: absolute; animation: burstFloat linear forwards;
+  pointer-events: none; font-size: 24px;
+}
+@keyframes burstFloat {
+  0%   { transform: translateY(0) rotate(0deg) scale(0.4); opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translateY(-110vh) rotate(720deg) scale(1.4); opacity: 0; }
+}
+
+/* ── ANIMATIONS ── */
+@keyframes softFadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes breathe {
+  0%, 100% { opacity: 0.5; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-3px); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(var(--r,0deg)); }
+  50% { transform: translateY(-10px) rotate(var(--r,0deg)); }
+}
+@keyframes sway {
+  0%, 100% { transform: rotate(var(--base-r, 0deg)); }
+  50% { transform: rotate(calc(var(--base-r, 0deg) + 6deg)); }
+}
+@keyframes slidePageLeft {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+</style>
+</head>
+<body>
+
+<canvas id="hearts-canvas"></canvas>
+<div id="transition-overlay"></div>
+<div id="collage-overlay">
+  <div class="overlay-msg">Click ni lablab🌿</div>
+</div>
+<div id="burst-layer"></div>
+
+<!-- Fixed botanical corners -->
+<div class="botanical-corner bc-tl">
+  <svg width="140" height="140" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 130 Q10 10 130 10" stroke="#7a9e7e" stroke-width="1" stroke-dasharray="4 4" fill="none" opacity="0.4"/>
+    <path d="M5 120 Q20 80 50 60 Q70 48 80 20" stroke="#4a7a50" stroke-width="1.5" fill="none" opacity="0.5"/>
+    <!-- leaves -->
+    <ellipse cx="55" cy="58" rx="14" ry="8" fill="#7a9e7e" opacity="0.6" transform="rotate(-35 55 58)"/>
+    <ellipse cx="72" cy="42" rx="12" ry="7" fill="#a8c5a0" opacity="0.5" transform="rotate(-55 72 42)"/>
+    <ellipse cx="38" cy="75" rx="11" ry="6" fill="#6aaa6e" opacity="0.5" transform="rotate(-20 38 75)"/>
+    <ellipse cx="22" cy="95" rx="10" ry="5" fill="#b5c98a" opacity="0.5" transform="rotate(-10 22 95)"/>
+    <!-- small flowers -->
+    <circle cx="80" cy="20" r="5" fill="#d4758a" opacity="0.6"/>
+    <circle cx="80" cy="20" r="2" fill="#fff" opacity="0.7"/>
+    <circle cx="50" cy="60" r="4" fill="#f0a0b8" opacity="0.5"/>
+  </svg>
+</div>
+<div class="botanical-corner bc-tr">
+  <svg width="140" height="140" viewBox="0 0 140 140" fill="none">
+    <path d="M130 130 Q130 10 10 10" stroke="#7a9e7e" stroke-width="1" stroke-dasharray="4 4" fill="none" opacity="0.4"/>
+    <path d="M135 120 Q120 80 90 60 Q70 48 60 20" stroke="#4a7a50" stroke-width="1.5" fill="none" opacity="0.5"/>
+    <ellipse cx="85" cy="58" rx="14" ry="8" fill="#7a9e7e" opacity="0.6" transform="rotate(35 85 58)"/>
+    <ellipse cx="68" cy="42" rx="12" ry="7" fill="#a8c5a0" opacity="0.5" transform="rotate(55 68 42)"/>
+    <ellipse cx="102" cy="75" rx="11" ry="6" fill="#6aaa6e" opacity="0.5" transform="rotate(20 102 75)"/>
+    <circle cx="60" cy="20" r="5" fill="#d4758a" opacity="0.6"/>
+    <circle cx="60" cy="20" r="2" fill="#fff" opacity="0.7"/>
+  </svg>
+</div>
+<div class="botanical-corner bc-bl">
+  <svg width="140" height="140" viewBox="0 0 140 140" fill="none">
+    <path d="M5 20 Q20 60 50 80 Q70 92 80 120" stroke="#4a7a50" stroke-width="1.5" fill="none" opacity="0.5"/>
+    <ellipse cx="55" cy="82" rx="14" ry="8" fill="#7a9e7e" opacity="0.6" transform="rotate(35 55 82)"/>
+    <ellipse cx="72" cy="98" rx="12" ry="7" fill="#a8c5a0" opacity="0.5" transform="rotate(55 72 98)"/>
+    <ellipse cx="38" cy="65" rx="11" ry="6" fill="#6aaa6e" opacity="0.5" transform="rotate(20 38 65)"/>
+    <circle cx="80" cy="120" r="5" fill="#f0a0b8" opacity="0.6"/>
+    <circle cx="80" cy="120" r="2" fill="#fff" opacity="0.7"/>
+  </svg>
+</div>
+<div class="botanical-corner bc-br">
+  <svg width="140" height="140" viewBox="0 0 140 140" fill="none">
+    <path d="M135 20 Q120 60 90 80 Q70 92 60 120" stroke="#4a7a50" stroke-width="1.5" fill="none" opacity="0.5"/>
+    <ellipse cx="85" cy="82" rx="14" ry="8" fill="#7a9e7e" opacity="0.6" transform="rotate(-35 85 82)"/>
+    <ellipse cx="68" cy="98" rx="12" ry="7" fill="#a8c5a0" opacity="0.5" transform="rotate(-55 68 98)"/>
+    <ellipse cx="102" cy="65" rx="11" ry="6" fill="#6aaa6e" opacity="0.5" transform="rotate(-20 102 65)"/>
+    <circle cx="60" cy="120" r="5" fill="#d4758a" opacity="0.6"/>
+    <circle cx="60" cy="120" r="2" fill="#fff" opacity="0.7"/>
+  </svg>
+</div>
+
+<!-- ═══ LANDING ═══ -->
+<section id="landing">
+  <div class="landing-tagline">for you, always ✦</div>
+
+  <div class="envelope-wrap">
+    <div class="envelope-scene">
+      <div class="env-body" id="envBody">
+        <div class="env-back-flap" id="envFlap"></div>
+        <div class="env-left-flap"></div>
+        <div class="env-right-flap"></div>
+        <div class="env-bottom-flap"></div>
+        <div class="env-text">
+          <div class="env-to">Happy Monthsary<br>My Love ❤️</div>
+          <div class="env-sub">Marah</div>
+        </div>
+        <div class="letter-peek" id="letterPeek">
+          <div class="letter-peek-text">a letter from my heart to yours…</div>
+        </div>
+        <div class="wax-seal" id="waxSeal" onclick="openEnvelope()" title="Click to open">
+          <svg viewBox="0 0 28 28" fill="none" width="28" height="28">
+            <path d="M14 4C14 4 10 7 10 12C10 14 11 15.5 14 17C17 15.5 18 14 18 12C18 7 14 4 14 4Z" fill="rgba(255,255,255,0.4)"/>
+            <text x="14" y="17" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="12" font-family="serif">✦</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="seal-hint">✦ press the seal to open ✦</div>
+  </div>
+
+  <!-- Decorative tulips + greenery -->
+  <div style="position:absolute; bottom:28px; left:18px; opacity:0.65; animation: float 3.5s ease-in-out infinite; --r:-8deg; display:flex; align-items:flex-end; gap:6px;">
+    <!-- fern fronds -->
+    <svg width="32" height="48" viewBox="0 0 32 48">
+      <path d="M16 48 Q12 38 8 28 Q14 30 16 36 Q16 30 20 22 Q24 30 16 36 Q18 28 14 20" stroke="#6aaa6e" stroke-width="1.5" fill="none"/>
+      <ellipse cx="8" cy="28" rx="6" ry="4" fill="#a8c5a0" opacity="0.7" transform="rotate(-30 8 28)"/>
+      <ellipse cx="24" cy="22" rx="6" ry="4" fill="#7a9e7e" opacity="0.6" transform="rotate(30 24 22)"/>
+    </svg>
+    <!-- tulip -->
+    <svg width="40" height="64" viewBox="0 0 40 64">
+      <rect x="17" y="40" width="5" height="22" rx="2.5" fill="#6aaa6e"/>
+      <path d="M20 40 Q16 30 16 22 Q16 12 20 6 Q24 12 24 22 Q24 30 20 40Z" fill="#d4758a"/>
+      <path d="M20 26 Q10 24 7 17 Q11 11 18 15 Q20 21 20 26Z" fill="#e8a0b4"/>
+      <path d="M20 26 Q30 24 33 17 Q29 11 22 15 Q20 21 20 26Z" fill="#e8a0b4"/>
+    </svg>
+    <!-- leaf -->
+    <svg width="24" height="36" viewBox="0 0 24 36">
+      <path d="M12 36 Q8 24 10 12 Q16 4 18 12 Q20 24 12 36Z" fill="#b5c98a" opacity="0.8"/>
+    </svg>
+  </div>
+
+  <div style="position:absolute; bottom:32px; right:18px; opacity:0.55; animation: float 4.2s ease-in-out 1s infinite; --r:10deg; display:flex; align-items:flex-end; gap:5px;">
+    <svg width="22" height="32" viewBox="0 0 22 32">
+      <path d="M11 32 Q7 22 9 10 Q14 2 16 10 Q18 22 11 32Z" fill="#a8c5a0" opacity="0.8"/>
+    </svg>
+    <!-- pink tulip -->
+    <svg width="34" height="54" viewBox="0 0 34 54">
+      <rect x="14" y="34" width="5" height="18" rx="2.5" fill="#7a9e7e"/>
+      <path d="M17 34 Q14 26 14 19 Q14 11 17 6 Q20 11 20 19 Q20 26 17 34Z" fill="#f0a0b8"/>
+      <path d="M17 22 Q9 20 6 14 Q10 9 16 13 Q17 18 17 22Z" fill="#fcc0d4"/>
+      <path d="M17 22 Q25 20 28 14 Q24 9 18 13 Q17 18 17 22Z" fill="#fcc0d4"/>
+    </svg>
+    <!-- green tulip -->
+    <svg width="30" height="46" viewBox="0 0 30 46">
+      <rect x="12" y="28" width="5" height="17" rx="2.5" fill="#6aaa6e"/>
+      <path d="M14.5 28 Q12 22 12 16 Q12 9 14.5 5 Q17 9 17 16 Q17 22 14.5 28Z" fill="#a8c5a0"/>
+      <path d="M14.5 18 Q7 16 5 11 Q8 6 13 10 Q14.5 14 14.5 18Z" fill="#d8ead4"/>
+      <path d="M14.5 18 Q22 16 24 11 Q21 6 16 10 Q14.5 14 14.5 18Z" fill="#d8ead4"/>
+    </svg>
+  </div>
+
+  <!-- extra floating leaves -->
+  <div style="position:absolute; top:30px; left:30px; opacity:0.3; animation: float 5s ease-in-out 0.5s infinite; --r:20deg;">
+    <svg width="36" height="36" viewBox="0 0 36 36">
+      <path d="M18 34 Q4 22 6 8 Q18 0 28 12 Q30 24 18 34Z" fill="#7a9e7e"/>
+    </svg>
+  </div>
+  <div style="position:absolute; top:40px; right:35px; opacity:0.25; animation: float 4.5s ease-in-out 2s infinite; --r:-15deg;">
+    <svg width="28" height="28" viewBox="0 0 28 28">
+      <path d="M14 26 Q2 18 4 6 Q14 0 22 10 Q24 20 14 26Z" fill="#6aaa6e"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ═══ MAIN CONTENT ═══ -->
+<div id="main-content">
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <!-- Botanical side decorations -->
+    <div class="gallery-botanical-left">
+      <svg width="60" height="300" viewBox="0 0 60 300" fill="none">
+        <path d="M30 300 Q28 200 30 100 Q32 50 28 10" stroke="#6aaa6e" stroke-width="2" fill="none"/>
+        <ellipse cx="18" cy="80" rx="20" ry="10" fill="#a8c5a0" transform="rotate(-40 18 80)"/>
+        <ellipse cx="40" cy="130" rx="18" ry="9" fill="#7a9e7e" transform="rotate(30 40 130)"/>
+        <ellipse cx="16" cy="180" rx="16" ry="8" fill="#b5c98a" transform="rotate(-25 16 180)"/>
+        <ellipse cx="42" cy="230" rx="17" ry="8" fill="#6aaa6e" transform="rotate(35 42 230)"/>
+      </svg>
+    </div>
+    <div class="gallery-botanical-right">
+      <svg width="60" height="300" viewBox="0 0 60 300" fill="none">
+        <path d="M30 300 Q28 200 30 100 Q32 50 28 10" stroke="#6aaa6e" stroke-width="2" fill="none"/>
+        <ellipse cx="18" cy="80" rx="20" ry="10" fill="#a8c5a0" transform="rotate(-40 18 80)"/>
+        <ellipse cx="40" cy="130" rx="18" ry="9" fill="#7a9e7e" transform="rotate(30 40 130)"/>
+        <ellipse cx="16" cy="180" rx="16" ry="8" fill="#b5c98a" transform="rotate(-25 16 180)"/>
+        <ellipse cx="42" cy="230" rx="17" ry="8" fill="#6aaa6e" transform="rotate(35 42 230)"/>
+      </svg>
+    </div>
+
+    <div class="gallery-header">our little story</div>
+    <div class="gallery-sub">tap each photo to reveal ✦</div>
+
+    <!-- Page dots -->
+    <div class="page-indicator" id="pageIndicator">
+      <div class="page-dot active" id="dot-0"></div>
+      <div class="page-dot" id="dot-1"></div>
+    </div>
+
+    <div class="collage-wrapper">
+      <div class="collage-pages" id="collagePages">
+
+        <!-- PAGE 1 -->
+        <div class="collage-page">
+          <div class="collage">
+
+            <div class="collage-tile tile-1" onclick="revealTile(this, 0)">
+              <div class="tile-inner">
+                <div class="tile-placeholder">
+                  <svg width="40" height="40" viewBox="0 0 56 56" fill="none"><rect x="6" y="6" width="44" height="44" rx="8" stroke="#7a9e7e" stroke-width="1.5"/><circle cx="28" cy="22" r="7" stroke="#7a9e7e" stroke-width="1.2"/><path d="M12 50c0-8 7-14 16-14s16 6 16 14" stroke="#7a9e7e" stroke-width="1.2" stroke-linecap="round"/></svg>
+                  <span>🌷</span>
+                </div>
+                <div class="tile-photo" style="background-image: url('photo1.jpeg');"></div>
+                <div class="tile-caption">🌷</div>
+                <div class="tile-burst"></div>
+              </div>
+              <div class="tile-hint">🌿</div>
+            </div>
+
+            <div class="collage-tile tile-2" onclick="revealTile(this, 0)">
+              <div class="tile-inner">
+                <div class="tile-placeholder">
+                  <svg width="36" height="36" viewBox="0 0 56 56" fill="none"><rect x="6" y="6" width="44" height="44" rx="8" stroke="#7a9e7e" stroke-width="1.5"/><circle cx="28" cy="22" r="7" stroke="#7a9e7e" stroke-width="1.2"/><path d="M12 50c0-8 7-14 16-14s16 6 16 14" stroke="#7a9e7e" stroke-width="1.2" stroke-linecap="round"/></svg>
+                  <span>🌷</span>
+                </div>
+                <div class="tile-photo" style="background-image: url('photo2.jpeg');"></div>
+                <div class="tile-caption">🌷</div>
+                <div class="tile-burst"></div>
+              </div>
+              <div class="tile-hint">🌷</div>
+            </div>
+
+            <div class="collage-tile tile-3" onclick="revealTile(this, 0)">
+              <div class="tile-inner">
+                <div class="tile-placeholder">
+                  <svg width="36" height="36" viewBox="0 0 56 56" fill="none"><rect x="6" y="6" width="44" height="44" rx="8" stroke="#7a9e7e" stroke-width="1.5"/><circle cx="28" cy="22" r="7" stroke="#7a9e7e" stroke-width="1.2"/><path d="M12 50c0-8 7-14 16-14s16 6 16 14" stroke="#7a9e7e" stroke-width="1.2" stroke-linecap="round"/></svg>
+                  <span>you & me</span>
+                </div>
+                <div class="tile-photo" style="background-image: url('photo3.jpeg');"></div>
+                <div class="tile-caption">you & me ✦</div>
+                <div class="tile-burst"></div>
+              </div>
+              <div class="tile-hint">🌿</div>
+            </div>
+
+            <div class="collage-tile tile-4" onclick="revealTile(this, 0)">
+              <div class="tile-inner">
+                <div class="tile-placeholder">
+                  <svg width="40" height="40" viewBox="0 0 56 56" fill="none"><rect x="6" y="6" width="44" height="44" rx="8" stroke="#7a9e7e" stroke-width="1.5"/><circle cx="28" cy="22" r="7" stroke="#7a9e7e" stroke-width="1.2"/><path d="M12 50c0-8 7-14 16-14s16 6 16 14" stroke="#7a9e7e" stroke-width="1.2" stroke-linecap="round"/></svg>
+                  <span>🌷</span>
+                </div>
+                <div class="tile-photo" style="background-image: url('photo5.jpeg');"></div>
+                <div class="tile-caption">🌷</div>
+                <div class="tile-burst"></div>
+              </div>
+              <div class="tile-hint">❤</div>
+            </div>
+            <div class="collage-tile tile-5" onclick="revealTile(this, 0)">
+              <div class="tile-inner">
+                <div class="tile-placeholder">
+                  <svg width="40" height="40" viewBox="0 0 56 56" fill="none"><rect x="6" y="6" width="44" height="44" rx="8" stroke="#7a9e7e" stroke-width="1.5"/><circle cx="28" cy="22" r="7" stroke="#7a9e7e" stroke-width="1.2"/><path d="M12 50c0-8 7-14 16-14s16 6 16 14" stroke="#7a9e7e" stroke-width="1.2" stroke-linecap="round"/></svg>
+                  <span>🌷</span>
+                </div>
+                <div class="tile-photo" style="background-image: url('photo4.jpeg');"></div>
+                <div class="tile-caption">🌷</div>
+                <div class="tile-burst"></div>
+              </div>
+              <div class="tile-hint">❤</div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- PAGE 2 -->
+        <div class="collage-page">
+          <div class="collage">
+
+            <div class="collage-tile tile-6" onclick="revealTile(this, 1)">
+              <div class="tile-inner">
+                <div class="tile-placeholder">
+                  <svg width="44" height="44" viewBox="0 0 56 56" fill="none"><rect x="6" y="6" width="44" height="44" rx="8" stroke="#7a9e7e" stroke-width="1.5"/><circle cx="28" cy="22" r="7" stroke="#7a9e7e" stroke-width="1.2"/><path d="M12 50c0-8 7-14 16-14s16 6 16 14" stroke="#7a9e7e" stroke-width="1.2" stroke-linecap="round"/></svg>
+                  <span>💚</span>
+                </div>
+                <div class="tile-photo" style="background-image: url('photo10.jpeg');"></div>
+                <div class="tile-caption">💚</div>
+                <div class="tile-burst"></div>
+              </div>
+              <div class="tile-hint">🌷</div>
+            </div>
+
+            <div class="collage-tile tile-7" onclick="revealTile(this, 1)">
+              <div class="tile-inner">
+                <div class="tile-placeholder">
+                  <svg width="34" height="34" viewBox="0 0 56 56" fill="none"><rect x="6" y="6" width="44" height="44" rx="8" stroke="#7a9e7e" stroke-width="1.5"/><circle cx="28" cy="22" r="7" stroke="#7a9e7e" stroke-width="1.2"/><path d="M12 50c0-8 7-14 16-14s16 6 16 14" stroke="#7a9e7e" stroke-width="1.2" stroke-linecap="round"/></svg>
+                  <span>softly, happily</span>
+                </div>
+                <div class="tile-photo" style="background-image: url('photo6.jpeg');"></div>
+                <div class="tile-caption">softly, happily ✦</div>
+                <div class="tile-burst"></div>
+              </div>
+              <div class="tile-hint">🌿</div>
+            </div>
+
+            <div class="collage-tile tile-8" onclick="revealTile(this, 1)">
+              <div class="tile-inner">
+                <div class="tile-placeholder">
+                  <svg width="34" height="34" viewBox="0 0 56 56" fill="none"><rect x="6" y="6" width="44" height="44" rx="8" stroke="#7a9e7e" stroke-width="1.5"/><circle cx="28" cy="22" r="7" stroke="#7a9e7e" stroke-width="1.2"/><path d="M12 50c0-8 7-14 16-14s16 6 16 14" stroke="#7a9e7e" stroke-width="1.2" stroke-linecap="round"/></svg>
+                  <span>you & me always</span>
+                </div>
+                <div class="tile-photo" style="background-image: url('photo8.jpeg');"></div>
+                <div class="tile-caption">you & me always ✦</div>
+                <div class="tile-burst"></div>
+              </div>
+              <div class="tile-hint">❤</div>
+            </div>
+
+            <div class="collage-tile tile-9" onclick="revealTile(this, 1)">
+              <div class="tile-inner">
+                <div class="tile-placeholder">
+                  <svg width="34" height="34" viewBox="0 0 56 56" fill="none"><rect x="6" y="6" width="44" height="44" rx="8" stroke="#7a9e7e" stroke-width="1.5"/><circle cx="28" cy="22" r="7" stroke="#7a9e7e" stroke-width="1.2"/><path d="M12 50c0-8 7-14 16-14s16 6 16 14" stroke="#7a9e7e" stroke-width="1.2" stroke-linecap="round"/></svg>
+                  <span>lablab</span>
+                </div>
+                <div class="tile-photo" style="background-image: url('photo9.jpeg');"></div>
+                <div class="tile-caption">lablab ✦</div>
+                <div class="tile-burst"></div>
+              </div>
+              <div class="tile-hint">🌷</div>
+            </div>
+            <div class="collage-tile tile-10" onclick="revealTile(this, 1)">
+              <div class="tile-inner">
+                <div class="tile-placeholder">
+                  <svg width="34" height="34" viewBox="0 0 56 56" fill="none"><rect x="6" y="6" width="44" height="44" rx="8" stroke="#7a9e7e" stroke-width="1.5"/><circle cx="28" cy="22" r="7" stroke="#7a9e7e" stroke-width="1.2"/><path d="M12 50c0-8 7-14 16-14s16 6 16 14" stroke="#7a9e7e" stroke-width="1.2" stroke-linecap="round"/></svg>
+                  <span>lablab</span>
+                </div>
+                <div class="tile-photo" style="background-image: url('photo7.jpeg');"></div>
+                <div class="tile-caption">lablab ✦</div>
+                <div class="tile-burst"></div>
+              </div>
+              <div class="tile-hint">🌷</div>
+            </div>
+
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Next page button (appears after all page-1 tiles revealed) -->
+    <button class="next-page-btn" id="nextPageBtn" onclick="goToPage(1)">
+      <span>Click here lablab</span>
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M4 10h12M12 6l4 4-4 4" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <!-- Back button (visible on page 2) -->
+    <button class="back-btn" id="backBtn" onclick="goToPage(0)">← back to page one</button>
+
+    <div class="gallery-hint" id="galleryHint">✦ tap each tile to reveal our moments ✦</div>
+  </section>
+
+  <!-- LETTER -->
+  <section id="letter-section">
+    <div class="vine-strip">
+      <svg width="100%" height="40" viewBox="0 0 1000 40" preserveAspectRatio="none" fill="none">
+        <path d="M0 20 Q50 5 100 20 Q150 35 200 20 Q250 5 300 20 Q350 35 400 20 Q450 5 500 20 Q550 35 600 20 Q650 5 700 20 Q750 35 800 20 Q850 5 900 20 Q950 35 1000 20" stroke="#a8c5a0" stroke-width="1.5" fill="none"/>
+        <path d="M100 20 Q95 10 92 5" stroke="#6aaa6e" stroke-width="1" fill="none"/>
+        <path d="M300 20 Q295 10 292 5" stroke="#6aaa6e" stroke-width="1" fill="none"/>
+        <path d="M500 20 Q495 10 492 5" stroke="#6aaa6e" stroke-width="1" fill="none"/>
+        <path d="M700 20 Q695 10 692 5" stroke="#6aaa6e" stroke-width="1" fill="none"/>
+        <path d="M900 20 Q895 10 892 5" stroke="#6aaa6e" stroke-width="1" fill="none"/>
+        <ellipse cx="92" cy="5" rx="5" ry="3" fill="#a8c5a0" opacity="0.6" transform="rotate(-20 92 5)"/>
+        <ellipse cx="292" cy="5" rx="5" ry="3" fill="#7a9e7e" opacity="0.6" transform="rotate(20 292 5)"/>
+        <ellipse cx="492" cy="5" rx="5" ry="3" fill="#a8c5a0" opacity="0.6" transform="rotate(-20 492 5)"/>
+        <ellipse cx="692" cy="5" rx="5" ry="3" fill="#7a9e7e" opacity="0.6" transform="rotate(20 692 5)"/>
+      </svg>
+    </div>
+
+    <div class="letter-divider" style="margin-top: 20px;">
+      <div class="divider-line"></div>
+      <div class="divider-icon">🌿</div>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="letter-paper">
+      <!-- Botanical watermark -->
+      <div class="letter-botanical">
+        <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+          <path d="M60 110 Q40 80 50 50 Q60 20 70 50 Q80 80 60 110Z" fill="#6aaa6e"/>
+          <path d="M60 80 Q30 70 20 50 Q35 30 55 50 Q60 65 60 80Z" fill="#a8c5a0"/>
+          <path d="M60 80 Q90 70 100 50 Q85 30 65 50 Q60 65 60 80Z" fill="#7a9e7e"/>
+        </svg>
+      </div>
+
+      <div class="letter-date">this monthsary, with all my heart</div>
+      <div class="letter-salutation">My dearest Maria Larah,</div>
+      <div class="letter-body">
+        <p>Every single day with you feels like a gift I never knew I deserved. 9 months past and its still u dali ra kaayo and adlaw sunod ani unta live in nata hehe nga ikaw permi akong makita taga mouli mugaan guro akong gibati ana biskan gikan gikapoy.</p>
+        <p>Im so greatfull and proud of you lablab biskan usahay di ta magka sinabtanay ug mag minaldita di dayon ko nimo pansinon hayts sakit ayo nas damdamin pero  mangita gypon tag way para mag bati, di unta nato kalimtam nga we love each other biskan mag away ta.</p>
+        <p>Lablab kung maghuna huna man gani kag mag ka gusto kos lain kana dika nakamata. balo ka nuh ga overthink pud biya ko gahilak tunga sa gabie nga astig man unta ko basta luv ikaw ra permi ang gihigugma sakong bugtong kasingkasing. and lablab past is past ayaw nag selos sa mga animal nga niagi okiii.</p>
+        <p>I am not always perfect with words, and I know that. But I hope nga ma feel nimo, in every hug, every look, every time I nga kauban tika gina wish nako nga mahunong ang oras just to be with you lang gyud.</p>
+        <p>Thank you for being mine. Thank you for letting me be yours.Im always here  for u lablab, Iloveyouu so much and always luv🌷</p>
+      </div>
+      <div class="letter-closing">Lablab nimo Mae Ann🌷</div>
+    </div>
+  </section>
+
+  <!-- FINAL -->
+  <section id="final-section">
+    <div class="letter-divider" style="width:min(480px,90vw); margin-bottom:0;">
+      <div class="divider-line" style="background: var(--sage-pale);"></div>
+      <div class="divider-icon" style="color: var(--sage);">🌷</div>
+      <div class="divider-line" style="background: var(--sage-pale);"></div>
+    </div>
+
+    <!-- Bouquet of tulips + greenery -->
+    <div class="final-flowers">
+      <!-- left fern -->
+      <svg width="30" height="54" viewBox="0 0 30 54" style="animation: float 4s ease-in-out infinite; --r:-5deg;">
+        <path d="M15 54 Q13 38 15 20 Q17 8 13 2" stroke="#6aaa6e" stroke-width="1.5" fill="none"/>
+        <ellipse cx="7" cy="20" rx="8" ry="4" fill="#a8c5a0" transform="rotate(-35 7 20)"/>
+        <ellipse cx="21" cy="30" rx="7" ry="3.5" fill="#7a9e7e" transform="rotate(25 21 30)"/>
+        <ellipse cx="6" cy="40" rx="7" ry="3" fill="#b5c98a" transform="rotate(-20 6 40)"/>
+      </svg>
+      <!-- pink tulip -->
+      <svg width="36" height="58" viewBox="0 0 36 58" style="animation: float 3.8s ease-in-out 0.3s infinite; --r:-3deg;">
+        <rect x="15" y="36" width="5" height="20" rx="2.5" fill="#6aaa6e"/>
+        <path d="M18 36 Q15 27 15 20 Q15 12 18 7 Q21 12 21 20 Q21 27 18 36Z" fill="#d4758a"/>
+        <path d="M18 24 Q10 22 7 16 Q11 10 17 14 Q18 20 18 24Z" fill="#e8a0b4"/>
+        <path d="M18 24 Q26 22 29 16 Q25 10 19 14 Q18 20 18 24Z" fill="#e8a0b4"/>
+        <!-- leaf -->
+        <path d="M18 38 Q10 34 8 28 Q14 26 18 32Z" fill="#a8c5a0"/>
+      </svg>
+      <!-- tall green tulip center -->
+      <svg width="48" height="76" viewBox="0 0 48 76" style="animation: float 4.5s ease-in-out 0.5s infinite; --r:0deg;">
+        <rect x="21" y="48" width="6" height="26" rx="3" fill="#4a7a50"/>
+        <path d="M24 48 Q20 38 20 28 Q20 16 24 9 Q28 16 28 28 Q28 38 24 48Z" fill="#f0a0b8"/>
+        <path d="M24 34 Q14 32 10 24 Q14 16 22 20 Q24 28 24 34Z" fill="#fcc0d4"/>
+        <path d="M24 34 Q34 32 38 24 Q34 16 26 20 Q24 28 24 34Z" fill="#fcc0d4"/>
+        <path d="M24 50 Q15 44 13 36 Q20 34 24 42Z" fill="#7a9e7e"/>
+        <path d="M24 50 Q33 44 35 36 Q28 34 24 42Z" fill="#a8c5a0"/>
+      </svg>
+      <!-- deep rose tulip -->
+      <svg width="36" height="60" viewBox="0 0 36 60" style="animation: float 3.6s ease-in-out 0.8s infinite; --r:3deg;">
+        <rect x="15" y="38" width="5" height="20" rx="2.5" fill="#6aaa6e"/>
+        <path d="M18 38 Q15 28 15 20 Q15 11 18 5 Q21 11 21 20 Q21 28 18 38Z" fill="#9b3a54"/>
+        <path d="M18 25 Q10 23 7 16 Q11 9 17 14 Q18 20 18 25Z" fill="#c9506a"/>
+        <path d="M18 25 Q26 23 29 16 Q25 9 19 14 Q18 20 18 25Z" fill="#c9506a"/>
+        <path d="M18 40 Q26 36 28 29 Q22 28 18 35Z" fill="#b5c98a"/>
+      </svg>
+      <!-- right fern -->
+      <svg width="30" height="54" viewBox="0 0 30 54" style="animation: float 4.2s ease-in-out 1s infinite; --r:5deg; transform: scaleX(-1);">
+        <path d="M15 54 Q13 38 15 20 Q17 8 13 2" stroke="#6aaa6e" stroke-width="1.5" fill="none"/>
+        <ellipse cx="7" cy="20" rx="8" ry="4" fill="#a8c5a0" transform="rotate(-35 7 20)"/>
+        <ellipse cx="21" cy="30" rx="7" ry="3.5" fill="#7a9e7e" transform="rotate(25 21 30)"/>
+        <ellipse cx="6" cy="40" rx="7" ry="3" fill="#b5c98a" transform="rotate(-20 6 40)"/>
+      </svg>
+    </div>
+
+    <div class="final-msg">you are my favourite everything</div>
+    <button class="love-btn" onclick="burstLove()">I Love You ❤️</button>
+    <div style="font-family:var(--serif); font-style:italic; font-size:12px; color:var(--sage); letter-spacing:2px;">tap to feel all the love</div>
+  </section>
+
+</div>
+
+<script>
+/* ── FLOATING PARTICLES CANVAS ── */
+const canvas = document.getElementById('hearts-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+resize();
+window.addEventListener('resize', resize);
+
+function createParticle() {
+  const types = ['heart', 'sparkle', 'leaf', 'petal'];
+  return {
+    x: Math.random() * canvas.width,
+    y: canvas.height + 20,
+    size: 7 + Math.random() * 13,
+    speed: 0.35 + Math.random() * 0.65,
+    opacity: 0.06 + Math.random() * 0.15,
+    drift: (Math.random() - 0.5) * 0.4,
+    type: types[Math.floor(Math.random() * types.length)],
+    phase: Math.random() * Math.PI * 2,
+    hue: ['#d4758a','#e8a0b4','#7a9e7e','#a8c5a0','#b5c98a'][Math.floor(Math.random()*5)]
+  };
+}
+
+for (let i = 0; i < 22; i++) {
+  const p = createParticle(); p.y = Math.random() * canvas.height; particles.push(p);
+}
+
+function drawHeart(ctx, x, y, size, color, opacity) {
+  ctx.save(); ctx.globalAlpha = opacity; ctx.fillStyle = color;
+  ctx.beginPath(); ctx.moveTo(x, y + size * 0.3);
+  ctx.bezierCurveTo(x, y, x - size, y, x - size, y + size * 0.35);
+  ctx.bezierCurveTo(x - size, y + size * 0.7, x, y + size, x, y + size);
+  ctx.bezierCurveTo(x, y + size, x + size, y + size * 0.7, x + size, y + size * 0.35);
+  ctx.bezierCurveTo(x + size, y, x, y, x, y + size * 0.3);
+  ctx.fill(); ctx.restore();
+}
+
+function drawLeaf(ctx, x, y, size, color, opacity) {
+  ctx.save(); ctx.globalAlpha = opacity; ctx.fillStyle = color;
+  ctx.beginPath(); ctx.moveTo(x, y + size);
+  ctx.quadraticCurveTo(x - size * 0.7, y, x, y - size);
+  ctx.quadraticCurveTo(x + size * 0.7, y, x, y + size);
+  ctx.fill(); ctx.restore();
+}
+
+function drawSparkle(ctx, x, y, size, color, opacity) {
+  ctx.save(); ctx.globalAlpha = opacity; ctx.strokeStyle = color; ctx.lineWidth = 1;
+  for (let i = 0; i < 4; i++) {
+    const angle = (i / 4) * Math.PI * 2;
+    ctx.beginPath(); ctx.moveTo(x, y);
+    ctx.lineTo(x + Math.cos(angle) * size, y + Math.sin(angle) * size);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach((p, i) => {
+    p.y -= p.speed;
+    p.x += p.drift + Math.sin(p.phase + Date.now() * 0.001) * 0.3;
+    p.phase += 0.01;
+    if (p.type === 'heart' || p.type === 'petal') drawHeart(ctx, p.x, p.y, p.size * 0.5, p.hue, p.opacity);
+    else if (p.type === 'leaf') drawLeaf(ctx, p.x, p.y, p.size * 0.5, p.hue, p.opacity);
+    else drawSparkle(ctx, p.x, p.y, p.size * 0.7, p.hue, p.opacity);
+    if (p.y < -30) { particles[i] = createParticle(); }
+  });
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+/* ── ENVELOPE OPEN ── */
+function openEnvelope() {
+  const seal = document.getElementById('waxSeal');
+  const body = document.getElementById('envBody');
+  const peek = document.getElementById('letterPeek');
+  const overlay = document.getElementById('transition-overlay');
+
+  seal.style.pointerEvents = 'none';
+  seal.style.transition = 'opacity 0.4s'; seal.style.opacity = '0';
+  setTimeout(() => { body.classList.add('opening'); }, 200);
+  setTimeout(() => { peek.classList.add('show'); }, 900);
+  setTimeout(() => { overlay.classList.add('active'); }, 2000);
+  setTimeout(() => {
+    document.getElementById('landing').style.display = 'none';
+    const main = document.getElementById('main-content');
+    main.classList.add('visible'); window.scrollTo(0, 0);
+  }, 2600);
+  setTimeout(() => { overlay.classList.remove('active'); }, 2800);
+}
+
+/* ── COLLAGE PAGE SYSTEM ── */
+let currentPage = 0;
+const tilesPerPage = [4, 4]; // tiles per page
+const revealedPerPage = [0, 0];
+
+function revealTile(tile, pageIndex) {
+  if (tile.classList.contains('revealed')) return;
+  tile.classList.add('revealed');
+  revealedPerPage[pageIndex]++;
+
+  // Spark burst
+  const burst = tile.querySelector('.tile-burst');
+  const sparks = ['❤','🌿','✦','🌷','❀','♥'];
+  for (let i = 0; i < 8; i++) {
+    const s = document.createElement('div');
+    s.className = 'tile-spark'; s.textContent = sparks[Math.floor(Math.random() * sparks.length)];
+    const angle = (i / 8) * Math.PI * 2; const dist = 40 + Math.random() * 30;
+    s.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
+    s.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
+    s.style.left = (30 + Math.random() * 40) + '%'; s.style.top = (30 + Math.random() * 40) + '%';
+    s.style.color = ['#d4758a','#7a9e7e','#9b3a54','#6aaa6e'][Math.floor(Math.random()*4)];
+    s.style.animationDelay = (Math.random() * 0.15) + 's';
+    burst.appendChild(s); setTimeout(() => s.remove(), 1200);
+  }
+
+  checkPageComplete(pageIndex);
+}
+
+function checkPageComplete(pageIndex) {
+  const hint = document.getElementById('galleryHint');
+  if (pageIndex === 0 && revealedPerPage[0] === tilesPerPage[0]) {
+    // All page 1 done — show next page button
+    const btn = document.getElementById('nextPageBtn');
+    btn.classList.add('visible');
+    hint.textContent = '✦ there\'s more — keep going ✦';
+    hint.style.color = 'var(--sage)';
+  }
+  if (pageIndex === 1 && revealedPerPage[1] === tilesPerPage[1]) {
+    hint.textContent = '✦ all our moments, forever ✦';
+    hint.style.color = 'var(--deep-rose)';
+  }
+}
+
+function goToPage(index) {
+  const collageOverlay = document.getElementById('collage-overlay');
+  const pages = document.getElementById('collagePages');
+  const nextBtn = document.getElementById('nextPageBtn');
+  const backBtn = document.getElementById('backBtn');
+
+  // flash overlay
+  collageOverlay.classList.add('active');
+
+  setTimeout(() => {
+    currentPage = index;
+    // Slide
+    pages.style.transform = `translateX(-${index * 50}%)`;
+
+    // Update dots
+    document.querySelectorAll('.page-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === index);
+    });
+
+    if (index === 1) {
+      nextBtn.classList.remove('visible');
+      backBtn.classList.add('visible');
+    } else {
+      backBtn.classList.remove('visible');
+      if (revealedPerPage[0] === tilesPerPage[0]) {
+        nextBtn.classList.add('visible');
+      }
+    }
+  }, 400);
+
+  setTimeout(() => {
+    collageOverlay.classList.remove('active');
+  }, 900);
+}
+
+/* ── BURST LOVE ── */
+function burstLove() {
+  const layer = document.getElementById('burst-layer');
+  const items = ['❤','🌷','🌿','✿','❀','♥','✦','🍀'];
+  const colors = ['#d4758a','#7a9e7e','#9b3a54','#6aaa6e','#f0a0b8','#a8c5a0'];
+  for (let i = 0; i < 70; i++) {
+    setTimeout(() => {
+      const el = document.createElement('div'); el.className = 'burst-item';
+      el.textContent = items[Math.floor(Math.random() * items.length)];
+      el.style.left = (5 + Math.random() * 90) + '%';
+      el.style.bottom = (Math.random() * 20) + '%';
+      el.style.color = colors[Math.floor(Math.random() * colors.length)];
+      el.style.fontSize = (18 + Math.random() * 28) + 'px';
+      el.style.animationDuration = (2 + Math.random() * 2.5) + 's';
+      el.style.animationDelay = (Math.random() * 0.8) + 's';
+      layer.appendChild(el); setTimeout(() => el.remove(), 5000);
+    }, i * 35);
+  }
+}
+</script>
+</body>
+</html>
